@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ترازوی پایش رفتار والد - تربیتو</title>
+    <!-- لود فونت استاندارد و زیبای وزیرمتن -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://developer.eitaa.com/eitaa-web-app.js"></script>
     <style>
         :root {
@@ -28,7 +32,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Tahoma, sans-serif;
+            font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
@@ -96,6 +100,7 @@
             color: var(--text-muted);
             cursor: pointer;
             transition: all 0.2s ease;
+            font-family: inherit;
         }
 
         .tab-btn.active {
@@ -209,6 +214,7 @@
             cursor: pointer;
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
             transition: transform 0.1s ease;
+            font-family: inherit;
         }
 
         .action-btn:active {
@@ -251,26 +257,30 @@
             font-size: 1.3rem;
             min-width: 32px;
             text-align: center;
+            font-weight: 800;
         }
 
+        /* دکمه لغو و اصلاح با قابلیت بازگشت چندباره */
         .undo-btn {
             background-color: #f1f5f9;
             border: 1px dashed #cbd5e1;
             color: #64748b;
-            padding: 8px 14px;
+            padding: 10px 14px;
             border-radius: 12px;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            transition: background 0.2s;
+            gap: 8px;
+            transition: all 0.2s;
+            font-family: inherit;
         }
 
         .undo-btn:active {
             background-color: #e2e8f0;
+            transform: scale(0.98);
         }
 
         .time-guide-note {
@@ -308,7 +318,7 @@
         .th-green { background: #dcfce7 !important; color: #166534; }
         .th-red { background: #fee2e2 !important; color: #991b1b; }
         .td-today { background-color: #fffbeb; font-weight: 800; }
-        .td-editable { cursor: pointer; }
+        .td-editable { cursor: pointer; font-weight: 700; }
 
         .report-period-selector {
             display: flex;
@@ -329,6 +339,7 @@
             font-weight: 700;
             color: #64748b;
             cursor: pointer;
+            font-family: inherit;
         }
 
         .period-btn.active {
@@ -406,6 +417,7 @@
             font-size: 0.9rem;
             cursor: pointer;
             margin-top: 8px;
+            font-family: inherit;
         }
 
         .export-btn.primary {
@@ -433,7 +445,7 @@
             transform: translateX(-50%);
             background-color: #0f172a;
             color: #ffffff;
-            padding: 10px 18px;
+            padding: 10px 20px;
             border-radius: 24px;
             font-size: 0.82rem;
             font-weight: 600;
@@ -533,6 +545,7 @@
                 <span id="total-red" class="total-counter count-red">0</span>
             </button>
 
+            <!-- دکمه لغو و کسر با بازگشت نامحدود -->
             <button class="undo-btn" onclick="undoLastAction()">
                 <span>↶</span>
                 <span>لغو و کسر آخرین ثبت (اصلاح اشتباه)</span>
@@ -651,7 +664,6 @@
         name: `${tg?.initDataUnsafe?.user?.first_name || ''} ${tg?.initDataUnsafe?.user?.last_name || ''}`.trim() || 'والد گرامی'
     };
 
-    // تبدیل دقیق تاریخ میلادی به تقویم هجری شمسی
     function getPersianDate(date = new Date()) {
         const fmt = new Intl.DateTimeFormat('en-US-u-ca-persian', {
             year: 'numeric', month: 'numeric', day: 'numeric',
@@ -669,7 +681,6 @@
         };
     }
 
-    // بازه منطقی با احتساب ساعت ۱۸ تا ۴ صبح روز بعد
     function getLogicalDateTime() {
         const now = new Date();
         const hour = now.getHours();
@@ -698,25 +709,30 @@
         return 'شب';
     }
 
-    // کلید یکتای روز در دیتابیس لوکال
     function getDayKey(dateObj) {
         const p = getPersianDate(dateObj);
         return `d_${p.year}_${p.month}_${p.day}`;
     }
 
     let dailyStore = {};
-    let lastActionLog = null;
+    // پشته تاریخچه ثبت‌ها برای لغو نامحدود
+    let actionHistory = [];
 
     function loadAllData() {
-        const saved = localStorage.getItem('payesh_store_v5');
+        const saved = localStorage.getItem('payesh_store_v6');
         if (saved) {
             try { dailyStore = JSON.parse(saved); } catch(e) {}
+        }
+        const savedHistory = localStorage.getItem('payesh_history_v6');
+        if (savedHistory) {
+            try { actionHistory = JSON.parse(savedHistory); } catch(e) {}
         }
         updateUI();
     }
 
     function saveAllData() {
-        localStorage.setItem('payesh_store_v5', JSON.stringify(dailyStore));
+        localStorage.setItem('payesh_store_v6', JSON.stringify(dailyStore));
+        localStorage.setItem('payesh_history_v6', JSON.stringify(actionHistory));
         updateUI();
     }
 
@@ -732,7 +748,7 @@
     }
 
     function recordAction(type) {
-        const { slot, dayName, targetDate, pDate } = getLogicalDateTime();
+        const { slot, dayName, targetDate } = getLogicalDateTime();
         const dKey = getDayKey(targetDate);
         const dayRecord = getDayData(dKey);
 
@@ -742,7 +758,11 @@
             dayRecord[slot].red += 1;
         }
 
-        lastActionLog = { type, slot, dayKey: dKey, dayName };
+        // اضافه کردن ثبت جدید به پشته تاریخچه
+        actionHistory.push({ type, slot, dayKey: dKey, dayName, timestamp: Date.now() });
+        // نگه‌داری تا ۵۰ ثبت اخیر برای جلوگیری از سنگین شدن حافظه
+        if (actionHistory.length > 50) actionHistory.shift();
+
         saveAllData();
 
         if (tg?.HapticFeedback) {
@@ -754,27 +774,37 @@
         syncWithGoogleSheet(type === 'green' ? 'کنش مثبت (سبز)' : 'نوسان هیجانی (قرمز)', slot, dayName, dayG, dayR);
     }
 
+    // متد لغو و اصلاح نامحدود
     function undoLastAction() {
-        if (!lastActionLog) {
-            showToast("موردی برای لغو ثبت یافت نشد.");
+        if (!actionHistory || actionHistory.length === 0) {
+            showToast("موردی برای لغو ثبت در تاریخچه یافت نشد.");
             return;
         }
 
-        const { type, slot, dayKey, dayName } = lastActionLog;
+        // خارج کردن آخرین عملیات از تاریخچه
+        const lastAction = actionHistory.pop();
+        const { type, slot, dayKey, dayName } = lastAction;
         const dayRecord = getDayData(dayKey);
 
+        let changed = false;
         if (type === 'green' && dayRecord[slot].green > 0) {
             dayRecord[slot].green -= 1;
+            changed = true;
         } else if (type === 'red' && dayRecord[slot].red > 0) {
             dayRecord[slot].red -= 1;
+            changed = true;
         }
 
         saveAllData();
-        showToast("✓ آخرین ثبت با موفقیت کسر و اصلاح شد.");
-        const dayG = dayRecord.morning.green + dayRecord.afternoon.green + dayRecord.night.green;
-        const dayR = dayRecord.morning.red + dayRecord.afternoon.red + dayRecord.night.red;
-        syncWithGoogleSheet(`اصلاح/کسر (${type === 'green' ? 'سبز' : 'قرمز'})`, slot, dayName, dayG, dayR);
-        lastActionLog = null;
+
+        if (changed) {
+            const dayG = dayRecord.morning.green + dayRecord.afternoon.green + dayRecord.night.green;
+            const dayR = dayRecord.morning.red + dayRecord.afternoon.red + dayRecord.night.red;
+            syncWithGoogleSheet(`اصلاح/کسر (${type === 'green' ? 'سبز' : 'قرمز'})`, slot, dayName, dayG, dayR);
+            showToast(`✓ ثبت ${type === 'green' ? 'سبز' : 'قرمز'} کسر شد (${actionHistory.length} بازگشت باقی‌مانده)`);
+        } else {
+            showToast("مقدار ثبت از قبل صفر بود.");
+        }
     }
 
     function promptEditCell(dayKey, dayName, slot, type) {
@@ -806,7 +836,7 @@
             method: 'POST',
             mode: 'no-cors',
             body: JSON.stringify(payload)
-        }).catch(err => console.log('خطا در ارسال:', err));
+        }).catch(err => console.log('خطا:', err));
     }
 
     function switchTab(tabId) {
@@ -846,7 +876,6 @@
         document.getElementById('total-green').textContent = totalG;
         document.getElementById('total-red').textContent = totalR;
 
-        // شیب ترازو
         const beamGroup = document.getElementById('scale-beam-group');
         const status = document.getElementById('scale-status');
 
@@ -872,10 +901,9 @@
         }
     }
 
-    // ساخت ۷ روز هفته جاری (شنبه تا جمعه)
     function getCurrentWeekDays() {
         const { targetDate } = getLogicalDateTime();
-        const dayOfWeek = targetDate.getDay(); // 0=یک‌شنبه, 6=شنبه
+        const dayOfWeek = targetDate.getDay();
         const diffToSat = (dayOfWeek === 6) ? 0 : -(dayOfWeek + 1);
 
         const satDate = new Date(targetDate);
@@ -920,7 +948,6 @@
         });
     }
 
-    // بازه‌های گزارش در تب ۳
     let currentReportPeriod = 'week';
 
     function switchReportPeriod(period) {
@@ -930,7 +957,6 @@
         renderReport();
     }
 
-    // استخراج آمار بر اساس بازه انتخابی (هفته جاری / ماه جاری شمسی / ماه گذشته شمسی)
     function getReportData() {
         const { targetDate, pDate } = getLogicalDateTime();
         let targetKeys = [];
@@ -941,7 +967,6 @@
             targetKeys = getCurrentWeekDays().map(w => w.key);
         } else if (currentReportPeriod === 'cur-month') {
             periodTitle = `ماه جاری (${pDate.monthName} ${pDate.year})`;
-            // تمام کلیدهایی که متعلق به این سال و ماه شمسی هستند
             const prefix = `d_${pDate.year}_${pDate.month}_`;
             for (let k in dailyStore) {
                 if (k.startsWith(prefix)) targetKeys.push(k);
@@ -1029,7 +1054,6 @@
             banner.className = 'insight-banner warning';
         }
 
-        // تغییر برچسب دکمه متناسب با دوره
         document.getElementById('btn-export-eitaa').textContent = `ارسال کارنامه (${totals.periodTitle}) به ایتا`;
         document.getElementById('btn-export-copy').textContent = `کپی گزارش (${totals.periodTitle})`;
     }
