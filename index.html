@@ -48,7 +48,6 @@
             gap: 12px;
         }
 
-        /* هدر لوگوی تربیتو */
         .brand-header {
             display: flex;
             flex-direction: column;
@@ -57,9 +56,11 @@
             padding: 4px 0 2px 0;
         }
 
-        .brand-logo-svg {
-            width: 62px;
-            height: 62px;
+        .brand-logo-img {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            border-radius: 12px;
         }
 
         .brand-title {
@@ -76,7 +77,6 @@
             font-weight: 700;
         }
 
-        /* ناوبری تب‌ها */
         .tab-nav {
             display: flex;
             background: #e2e8f0;
@@ -120,7 +120,6 @@
             margin: 0 0 6px 0;
         }
 
-        /* ترازوی وکتور گرافیکی */
         .scale-box {
             display: flex;
             flex-direction: column;
@@ -147,7 +146,6 @@
             text-align: center;
         }
 
-        /* نوبت‌های زمانی */
         .time-slots {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -191,7 +189,6 @@
         .count-green { color: var(--green-dark); }
         .count-red { color: var(--red-dark); }
 
-        /* کلیدهای لمسی */
         .action-buttons {
             display: flex;
             flex-direction: column;
@@ -256,7 +253,26 @@
             text-align: center;
         }
 
-        /* تب ۲: جدول */
+        .undo-btn {
+            background-color: #f1f5f9;
+            border: 1px dashed #cbd5e1;
+            color: #64748b;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: background 0.2s;
+        }
+
+        .undo-btn:active {
+            background-color: #e2e8f0;
+        }
+
         .time-guide-note {
             background-color: #f1f5f9;
             border-radius: 8px;
@@ -292,8 +308,35 @@
         .th-green { background: #dcfce7 !important; color: #166534; }
         .th-red { background: #fee2e2 !important; color: #991b1b; }
         .td-today { background-color: #fffbeb; font-weight: 800; }
+        .td-editable { cursor: pointer; }
 
-        /* تب ۳: تحلیل */
+        .report-period-selector {
+            display: flex;
+            background: #f1f5f9;
+            padding: 3px;
+            border-radius: 10px;
+            gap: 4px;
+            margin-bottom: 12px;
+        }
+
+        .period-btn {
+            flex: 1;
+            padding: 8px 4px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #64748b;
+            cursor: pointer;
+        }
+
+        .period-btn.active {
+            background: #ffffff;
+            color: var(--brand-primary);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
         .stat-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -316,7 +359,6 @@
             display: block;
         }
 
-        /* نوار نسبت */
         .ratio-progress-wrapper {
             margin-top: 12px;
             background: #f8fafc;
@@ -384,7 +426,6 @@
             margin-top: 8px;
         }
 
-        /* توست پیام */
         .toast {
             position: fixed;
             bottom: 24px;
@@ -412,56 +453,36 @@
 <body>
 
 <div class="container">
-    <!-- هدر با لوگوی اختصاصی تربیتو -->
     <div class="brand-header">
-        <svg class="brand-logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- جوانه بالایی نارنجی -->
-            <path d="M42 22C42 22 47 12 58 14C58 14 59 24 50 27C44 29 42 22 42 22Z" fill="#ea580c"/>
-            <path d="M38 23C38 23 33 13 22 15C22 15 21 25 30 28C36 30 38 23 38 23Z" fill="#ea580c"/>
-            <!-- سقف و دیواره خانه فیروزه‌ای -->
-            <path d="M50 26L78 48V78C78 81 75 83 72 83H60V64C60 62 58 60 56 60H44C42 60 40 62 40 64V83H28C25 83 22 81 22 78V48L50 26Z" stroke="#0284c7" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- والدین فیروزه‌ای -->
-            <circle cx="38" cy="51" r="5" fill="#0284c7"/>
-            <path d="M32 63C32 59 35 57 38 57C41 57 44 59 44 63" stroke="#0284c7" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="62" cy="51" r="5" fill="#0284c7"/>
-            <path d="M56 63C56 59 59 57 62 57C65 57 68 59 68 63" stroke="#0284c7" stroke-width="3" stroke-linecap="round"/>
-            <!-- کودک نارنجی در مرکز -->
-            <circle cx="50" cy="62" r="4.5" fill="#ea580c"/>
-            <path d="M45 74C45 70 47 68 50 68C53 68 55 70 55 74" stroke="#ea580c" stroke-width="3" stroke-linecap="round"/>
-        </svg>
+        <img src="logo.png" class="brand-logo-img" alt="مدرسه والدین تربیتو" onerror="this.src='https://developer.eitaa.com/favicon.ico'">
         <span class="brand-title">مدرسه والدین تربیتو</span>
         <span class="brand-subtitle">ترازوی پایش رفتار والد</span>
     </div>
 
-    <!-- منوی تب‌ها -->
     <div class="tab-nav">
         <button class="tab-btn active" onclick="switchTab('record')">ثبت لحظه‌ای</button>
         <button class="tab-btn" onclick="switchTab('table')">جدول هفته</button>
         <button class="tab-btn" onclick="switchTab('report')">کارنامه و تحلیل</button>
     </div>
 
-    <!-- تب ۱: ثبت لحظه‌ای و ترازو -->
+    <!-- تب ۱: ثبت لحظه‌ای -->
     <div id="tab-record" class="tab-content">
         <div class="card">
             <div class="header-title">ترازوی تعامل روزانه والد</div>
             
             <div class="scale-box">
                 <svg class="scale-svg-container" viewBox="0 0 240 120">
-                    <!-- پایه مرکزی ترازو -->
                     <path d="M120 28 L120 100 M95 100 L145 100" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
                     <polygon points="120,20 112,32 128,32" fill="#334155"/>
 
-                    <!-- بازوی متحرک (شاهین ترازو) -->
                     <g id="scale-beam-group" class="beam-group">
                         <line x1="25" y1="30" x2="215" y2="30" stroke="#475569" stroke-width="5" stroke-linecap="round"/>
                         <circle cx="120" cy="30" r="4" fill="#0f172a"/>
                         
-                        <!-- کفه قرمز (سمت چپ) -->
                         <line x1="35" y1="30" x2="25" y2="65" stroke="#94a3b8" stroke-width="1.5"/>
                         <line x1="35" y1="30" x2="45" y2="65" stroke="#94a3b8" stroke-width="1.5"/>
                         <path d="M18 65 Q35 78 52 65 Z" fill="#ef4444"/>
 
-                        <!-- کفه سبز (سمت راست) -->
                         <line x1="205" y1="30" x2="195" y2="65" stroke="#94a3b8" stroke-width="1.5"/>
                         <line x1="205" y1="30" x2="215" y2="65" stroke="#94a3b8" stroke-width="1.5"/>
                         <path d="M188 65 Q205 78 222 65 Z" fill="#10b981"/>
@@ -471,7 +492,6 @@
                 <div id="scale-status" class="scale-status">ترازوی آرامش: در حالت تعادل</div>
             </div>
 
-            <!-- شمارنده‌های صبح، عصر، شب -->
             <div class="time-slots">
                 <div id="slot-morning" class="slot-box">
                     <span class="slot-badge">صبح</span>
@@ -512,6 +532,11 @@
                 </div>
                 <span id="total-red" class="total-counter count-red">0</span>
             </button>
+
+            <button class="undo-btn" onclick="undoLastAction()">
+                <span>↶</span>
+                <span>لغو و کسر آخرین ثبت (اصلاح اشتباه)</span>
+            </button>
         </div>
 
         <div class="footer-note">مدرسه والدین تربیتو • فرم پایش روزمره</div>
@@ -547,14 +572,23 @@
                     </tbody>
                 </table>
             </div>
+            <div style="font-size: 0.72rem; color: #94a3b8; text-align: center; margin-top: 8px;">
+                💡 برای ویرایش دستی هر عدد، کافی است روی آن ضربه بزنید.
+            </div>
         </div>
         <div class="footer-note">مدرسه والدین تربیتو • فرم پایش روزمره</div>
     </div>
 
-    <!-- تب ۳: کارنامه و تحلیل نهایی -->
+    <!-- تب ۳: کارنامه، تحلیل و سوابق ماهانه -->
     <div id="tab-report" class="tab-content" style="display: none;">
         <div class="card">
-            <div class="header-title">تحلیل و ترازوی پایان هفته</div>
+            <div class="header-title">تحلیل و کارنامه رفتار</div>
+
+            <div class="report-period-selector">
+                <button id="pbtn-week" class="period-btn active" onclick="switchReportPeriod('week')">هفته جاری</button>
+                <button id="pbtn-cur-month" class="period-btn" onclick="switchReportPeriod('cur-month')">ماه جاری</button>
+                <button id="pbtn-prev-month" class="period-btn" onclick="switchReportPeriod('prev-month')">ماه گذشته</button>
+            </div>
             
             <div class="stat-grid">
                 <div class="stat-box">
@@ -567,7 +601,6 @@
                 </div>
             </div>
 
-            <!-- وضعیت بصری نسبت -->
             <div class="ratio-progress-wrapper">
                 <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;">
                     <span style="color: var(--green-dark);" id="rep-percent-green">۰٪ کنش مثبت</span>
@@ -583,7 +616,7 @@
             </div>
 
             <div class="stat-box" style="margin-top: 10px;">
-                <span style="font-size: 0.75rem; color: var(--text-muted);">کانون بحران (بیشترین تکرار نوسان بر اساس آمار)</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">کانون بحران (بیشترین تکرار نوسان)</span>
                 <span id="rep-crisis" class="stat-val" style="font-size: 1.05rem; color: var(--brand-orange); margin-top: 4px;">---</span>
             </div>
 
@@ -592,8 +625,8 @@
             </div>
 
             <div style="margin-top: 12px;">
-                <button class="export-btn primary" onclick="sendReportToEitaa()">ارسال کارنامه به پیام‌رسان ایتا</button>
-                <button class="export-btn secondary" onclick="copyReportText()">کپی گزارش متنی</button>
+                <button id="btn-export-eitaa" class="export-btn primary" onclick="sendReportToEitaa()">ارسال کارنامه به پیام‌رسان ایتا</button>
+                <button id="btn-export-copy" class="export-btn secondary" onclick="copyReportText()">کپی گزارش متنی</button>
             </div>
         </div>
         <div class="footer-note">مدرسه والدین تربیتو • فرم پایش روزمره</div>
@@ -605,6 +638,7 @@
 <script>
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwEf7NKmjEXyVm9izcdCVYZE_8ocnYiPUe6AXj-l6yPK14JEGoqy-pnRKXLHbPnlON9Fg/exec";
     const DAYS = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه'];
+    const PERSIAN_MONTHS = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
 
     const tg = window.Eitaa?.WebApp || window.Telegram?.WebApp;
     if (tg) {
@@ -617,11 +651,29 @@
         name: `${tg?.initDataUnsafe?.user?.first_name || ''} ${tg?.initDataUnsafe?.user?.last_name || ''}`.trim() || 'والد گرامی'
     };
 
-    // محاسبه هوشمند بازه زمانی و تاریخ منطقی (با احتساب ۱۸ تا ۴ صبح روز بعد)
-    function getLogicalTimeData() {
+    // تبدیل دقیق تاریخ میلادی به تقویم هجری شمسی
+    function getPersianDate(date = new Date()) {
+        const fmt = new Intl.DateTimeFormat('en-US-u-ca-persian', {
+            year: 'numeric', month: 'numeric', day: 'numeric',
+            hour: 'numeric', hour12: false
+        });
+        const parts = fmt.formatToParts(date);
+        const res = {};
+        parts.forEach(p => res[p.type] = p.value);
+        const m = parseInt(res.month);
+        return {
+            year: parseInt(res.year),
+            month: m,
+            day: parseInt(res.day),
+            monthName: PERSIAN_MONTHS[m - 1]
+        };
+    }
+
+    // بازه منطقی با احتساب ساعت ۱۸ تا ۴ صبح روز بعد
+    function getLogicalDateTime() {
         const now = new Date();
         const hour = now.getHours();
-        let targetDate = new Date(now);
+        let target = new Date(now);
         let slot = 'night';
 
         if (hour >= 4 && hour < 12) {
@@ -630,16 +682,14 @@
             slot = 'afternoon';
         } else {
             slot = 'night';
-            // ساعت بین ۰۰:۰۰ تا ۰۳:۵۹ بامداد متعلق به شبِ روز قبل است
-            if (hour < 4) {
-                targetDate.setDate(targetDate.getDate() - 1);
-            }
+            if (hour < 4) target.setDate(target.getDate() - 1);
         }
 
         const map = { 6: 'شنبه', 0: 'یکشنبه', 1: 'دوشنبه', 2: 'سه‌شنبه', 3: 'چهارشنبه', 4: 'پنج‌شنبه', 5: 'جمعه' };
-        const dayName = map[targetDate.getDay()];
+        const dayName = map[target.getDay()];
+        const pDate = getPersianDate(target);
 
-        return { slot, dayName };
+        return { slot, dayName, targetDate: target, pDate };
     }
 
     function getSlotFa(slot) {
@@ -648,67 +698,106 @@
         return 'شب';
     }
 
-    let weekData = {};
+    // کلید یکتای روز در دیتابیس لوکال
+    function getDayKey(dateObj) {
+        const p = getPersianDate(dateObj);
+        return `d_${p.year}_${p.month}_${p.day}`;
+    }
 
-    function initWeekData() {
-        DAYS.forEach(day => {
-            weekData[day] = {
+    let dailyStore = {};
+    let lastActionLog = null;
+
+    function loadAllData() {
+        const saved = localStorage.getItem('payesh_store_v5');
+        if (saved) {
+            try { dailyStore = JSON.parse(saved); } catch(e) {}
+        }
+        updateUI();
+    }
+
+    function saveAllData() {
+        localStorage.setItem('payesh_store_v5', JSON.stringify(dailyStore));
+        updateUI();
+    }
+
+    function getDayData(dayKey) {
+        if (!dailyStore[dayKey]) {
+            dailyStore[dayKey] = {
                 morning: { green: 0, red: 0 },
                 afternoon: { green: 0, red: 0 },
                 night: { green: 0, red: 0 }
             };
-        });
-    }
-
-    function loadData() {
-        initWeekData();
-        const saved = localStorage.getItem('payesh_week_v3');
-        if (saved) {
-            try {
-                const parsed = JSON.parse(saved);
-                DAYS.forEach(day => {
-                    if (parsed[day]) weekData[day] = parsed[day];
-                });
-            } catch(e) {}
         }
-        updateUI();
-    }
-
-    function saveData() {
-        localStorage.setItem('payesh_week_v3', JSON.stringify(weekData));
-        updateUI();
+        return dailyStore[dayKey];
     }
 
     function recordAction(type) {
-        const { slot, dayName } = getLogicalTimeData();
+        const { slot, dayName, targetDate, pDate } = getLogicalDateTime();
+        const dKey = getDayKey(targetDate);
+        const dayRecord = getDayData(dKey);
 
         if (type === 'green') {
-            weekData[dayName][slot].green += 1;
+            dayRecord[slot].green += 1;
         } else {
-            weekData[dayName][slot].red += 1;
+            dayRecord[slot].red += 1;
         }
 
-        saveData();
+        lastActionLog = { type, slot, dayKey: dKey, dayName };
+        saveAllData();
 
         if (tg?.HapticFeedback) {
             tg.HapticFeedback.impactOccurred(type === 'green' ? 'light' : 'medium');
         }
 
-        syncWithGoogleSheet(type, slot, dayName);
+        const dayG = dayRecord.morning.green + dayRecord.afternoon.green + dayRecord.night.green;
+        const dayR = dayRecord.morning.red + dayRecord.afternoon.red + dayRecord.night.red;
+        syncWithGoogleSheet(type === 'green' ? 'کنش مثبت (سبز)' : 'نوسان هیجانی (قرمز)', slot, dayName, dayG, dayR);
     }
 
-    function syncWithGoogleSheet(actionType, slot, dayName) {
-        const dayInfo = weekData[dayName];
-        const dayG = dayInfo.morning.green + dayInfo.afternoon.green + dayInfo.night.green;
-        const dayR = dayInfo.morning.red + dayInfo.afternoon.red + dayInfo.night.red;
+    function undoLastAction() {
+        if (!lastActionLog) {
+            showToast("موردی برای لغو ثبت یافت نشد.");
+            return;
+        }
 
+        const { type, slot, dayKey, dayName } = lastActionLog;
+        const dayRecord = getDayData(dayKey);
+
+        if (type === 'green' && dayRecord[slot].green > 0) {
+            dayRecord[slot].green -= 1;
+        } else if (type === 'red' && dayRecord[slot].red > 0) {
+            dayRecord[slot].red -= 1;
+        }
+
+        saveAllData();
+        showToast("✓ آخرین ثبت با موفقیت کسر و اصلاح شد.");
+        const dayG = dayRecord.morning.green + dayRecord.afternoon.green + dayRecord.night.green;
+        const dayR = dayRecord.morning.red + dayRecord.afternoon.red + dayRecord.night.red;
+        syncWithGoogleSheet(`اصلاح/کسر (${type === 'green' ? 'سبز' : 'قرمز'})`, slot, dayName, dayG, dayR);
+        lastActionLog = null;
+    }
+
+    function promptEditCell(dayKey, dayName, slot, type) {
+        const dayRecord = getDayData(dayKey);
+        const currentVal = dayRecord[slot][type];
+        const title = `${type === 'green' ? 'کنش مثبت' : 'نوسان هیجانی'} - ${dayName} (${getSlotFa(slot)})`;
+        const newVal = prompt(`مقدار جدید برای ${title} را وارد کنید:`, currentVal);
+        if (newVal !== null && !isNaN(newVal) && parseInt(newVal) >= 0) {
+            dayRecord[slot][type] = parseInt(newVal);
+            saveAllData();
+            renderWeeklyTable();
+            showToast("✓ جدول با موفقیت ویرایش شد.");
+        }
+    }
+
+    function syncWithGoogleSheet(actionType, slot, dayName, dayG, dayR) {
         const payload = {
             timestamp: new Date().toLocaleString('fa-IR', { timeZone: 'Asia/Tehran' }),
             userId: userData.id,
             userName: userData.name,
             dayOfWeek: dayName,
             slot: getSlotFa(slot),
-            actionType: actionType === 'green' ? 'کنش مثبت (سبز)' : 'نوسان هیجانی (قرمز)',
+            actionType: actionType,
             todayGreen: dayG,
             todayRed: dayR
         };
@@ -717,7 +806,7 @@
             method: 'POST',
             mode: 'no-cors',
             body: JSON.stringify(payload)
-        }).catch(err => console.log('خطا:', err));
+        }).catch(err => console.log('خطا در ارسال:', err));
     }
 
     function switchTab(tabId) {
@@ -732,8 +821,8 @@
     }
 
     function updateUI() {
-        const { slot: currentSlot, dayName: today } = getLogicalTimeData();
-        const todayStats = weekData[today];
+        const { slot: currentSlot, dayName: today, targetDate } = getLogicalDateTime();
+        const todayStats = getDayData(getDayKey(targetDate));
 
         ['morning', 'afternoon', 'night'].forEach(slot => {
             const el = document.getElementById(`slot-${slot}`);
@@ -757,7 +846,7 @@
         document.getElementById('total-green').textContent = totalG;
         document.getElementById('total-red').textContent = totalR;
 
-        // اصلاح فیزیک شیب ترازو (کفه سبز در راست است؛ چرخش مثبت کفه راست را پایین می‌آورد)
+        // شیب ترازو
         const beamGroup = document.getElementById('scale-beam-group');
         const status = document.getElementById('scale-status');
 
@@ -767,7 +856,6 @@
             status.style.color = 'var(--text-muted)';
         } else {
             const diff = totalG - totalR;
-            // چرخش مثبت یعنی کفه سبز سنگین‌تر است و پایین می‌آید
             let deg = Math.max(-16, Math.min(16, diff * 2.5));
             beamGroup.style.transform = `rotate(${deg}deg)`;
 
@@ -784,36 +872,101 @@
         }
     }
 
+    // ساخت ۷ روز هفته جاری (شنبه تا جمعه)
+    function getCurrentWeekDays() {
+        const { targetDate } = getLogicalDateTime();
+        const dayOfWeek = targetDate.getDay(); // 0=یک‌شنبه, 6=شنبه
+        const diffToSat = (dayOfWeek === 6) ? 0 : -(dayOfWeek + 1);
+
+        const satDate = new Date(targetDate);
+        satDate.setDate(satDate.getDate() + diffToSat);
+
+        const weekList = [];
+        for (let i = 0; i < 7; i++) {
+            const d = new Date(satDate);
+            d.setDate(d.getDate() + i);
+            weekList.push({
+                dayName: DAYS[i],
+                key: getDayKey(d),
+                date: d
+            });
+        }
+        return weekList;
+    }
+
     function renderWeeklyTable() {
         const tbody = document.getElementById('table-body');
         tbody.innerHTML = '';
-        const { dayName: currentDay } = getLogicalTimeData();
+        const { targetDate } = getLogicalDateTime();
+        const todayKey = getDayKey(targetDate);
+        const weekDays = getCurrentWeekDays();
 
-        DAYS.forEach(day => {
-            const d = weekData[day];
-            const isToday = (day === currentDay);
+        weekDays.forEach(item => {
+            const d = getDayData(item.key);
+            const isToday = (item.key === todayKey);
             const tr = document.createElement('tr');
             if (isToday) tr.className = 'td-today';
 
             tr.innerHTML = `
-                <td>${day} ${isToday ? '★' : ''}</td>
-                <td style="color:var(--green-dark);">${d.morning.green}</td>
-                <td style="color:var(--green-dark);">${d.afternoon.green}</td>
-                <td style="color:var(--green-dark);">${d.night.green}</td>
-                <td style="color:var(--red-dark);">${d.morning.red}</td>
-                <td style="color:var(--red-dark);">${d.afternoon.red}</td>
-                <td style="color:var(--red-dark);">${d.night.red}</td>
+                <td>${item.dayName} ${isToday ? '★' : ''}</td>
+                <td class="td-editable" style="color:var(--green-dark);" onclick="promptEditCell('${item.key}', '${item.dayName}', 'morning', 'green')">${d.morning.green}</td>
+                <td class="td-editable" style="color:var(--green-dark);" onclick="promptEditCell('${item.key}', '${item.dayName}', 'afternoon', 'green')">${d.afternoon.green}</td>
+                <td class="td-editable" style="color:var(--green-dark);" onclick="promptEditCell('${item.key}', '${item.dayName}', 'night', 'green')">${d.night.green}</td>
+                <td class="td-editable" style="color:var(--red-dark);" onclick="promptEditCell('${item.key}', '${item.dayName}', 'morning', 'red')">${d.morning.red}</td>
+                <td class="td-editable" style="color:var(--red-dark);" onclick="promptEditCell('${item.key}', '${item.dayName}', 'afternoon', 'red')">${d.afternoon.red}</td>
+                <td class="td-editable" style="color:var(--red-dark);" onclick="promptEditCell('${item.key}', '${item.dayName}', 'night', 'red')">${d.night.red}</td>
             `;
             tbody.appendChild(tr);
         });
     }
 
-    function getWeeklyTotals() {
+    // بازه‌های گزارش در تب ۳
+    let currentReportPeriod = 'week';
+
+    function switchReportPeriod(period) {
+        currentReportPeriod = period;
+        document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`pbtn-${period}`).classList.add('active');
+        renderReport();
+    }
+
+    // استخراج آمار بر اساس بازه انتخابی (هفته جاری / ماه جاری شمسی / ماه گذشته شمسی)
+    function getReportData() {
+        const { targetDate, pDate } = getLogicalDateTime();
+        let targetKeys = [];
+        let periodTitle = '';
+
+        if (currentReportPeriod === 'week') {
+            periodTitle = 'هفته جاری';
+            targetKeys = getCurrentWeekDays().map(w => w.key);
+        } else if (currentReportPeriod === 'cur-month') {
+            periodTitle = `ماه جاری (${pDate.monthName} ${pDate.year})`;
+            // تمام کلیدهایی که متعلق به این سال و ماه شمسی هستند
+            const prefix = `d_${pDate.year}_${pDate.month}_`;
+            for (let k in dailyStore) {
+                if (k.startsWith(prefix)) targetKeys.push(k);
+            }
+        } else if (currentReportPeriod === 'prev-month') {
+            let prevM = pDate.month - 1;
+            let prevY = pDate.year;
+            if (prevM === 0) {
+                prevM = 12;
+                prevY -= 1;
+            }
+            const prevMonthName = PERSIAN_MONTHS[prevM - 1];
+            periodTitle = `ماه گذشته (${prevMonthName} ${prevY})`;
+
+            const prefix = `d_${prevY}_${prevM}_`;
+            for (let k in dailyStore) {
+                if (k.startsWith(prefix)) targetKeys.push(k);
+            }
+        }
+
         let green = 0, red = 0;
         let slotReds = { 'صبح': 0, 'عصر': 0, 'شب': 0 };
 
-        DAYS.forEach(day => {
-            const d = weekData[day];
+        targetKeys.forEach(k => {
+            const d = getDayData(k);
             green += (d.morning.green + d.afternoon.green + d.night.green);
             red += (d.morning.red + d.afternoon.red + d.night.red);
 
@@ -832,11 +985,18 @@
         }
         if (maxRed === 0) crisisSlot = 'نوسانی ثبت نشده است';
 
-        return { green, red, crisisSlot };
+        return { green, red, crisisSlot, periodTitle };
     }
 
     function renderReport() {
-        const totals = getWeeklyTotals();
+        const { pDate } = getLogicalDateTime();
+        document.getElementById('pbtn-cur-month').textContent = `ماه جاری (${pDate.monthName})`;
+
+        let prevM = pDate.month - 1;
+        if (prevM === 0) prevM = 12;
+        document.getElementById('pbtn-prev-month').textContent = `ماه گذشته (${PERSIAN_MONTHS[prevM - 1]})`;
+
+        const totals = getReportData();
         document.getElementById('rep-total-green').textContent = totals.green;
         document.getElementById('rep-total-red').textContent = totals.red;
 
@@ -856,26 +1016,30 @@
 
         const banner = document.getElementById('rep-insight');
         if (totalActions === 0) {
-            banner.textContent = 'هنوز رفتاری در این هفته ثبت نشده است. با ثبت رفتارهای روزمره، گزارش تحلیلی شما فعال می‌شود.';
+            banner.textContent = `هنوز رفتاری برای "${totals.periodTitle}" ثبت نشده است.`;
             banner.className = 'insight-banner';
         } else if (totals.green >= totals.red * 5 && totals.red > 0) {
-            banner.textContent = `فوق‌العاده است! شما به استاندارد طلایی نسبت ۵ به ۱ دست یافته‌اید. ذخیره عاطفی فرزند شما کاملاً شارژ است.`;
+            banner.textContent = `فوق‌العاده است! در بازه "${totals.periodTitle}" به استاندارد طلایی نسبت ۵ به ۱ دست یافته‌اید. ذخیره عاطفی فرزند شما کاملاً شارژ است.`;
             banner.className = 'insight-banner';
         } else if (totals.green > totals.red) {
-            banner.textContent = `وضعیت مثبت: کفه کنش‌های مثبت شما سنگین‌تر است. برای کاهش نوسانات در بازه "${totals.crisisSlot}"، ۵ دقیقه استراحت و تنفس عمیق پیش از شروع این زمان توصیه می‌شود.`;
+            banner.textContent = `وضعیت مثبت (${totals.periodTitle}): کفه کنش‌های مثبت سنگین‌تر است. برای کاهش نوسانات در بازه "${totals.crisisSlot}"، ۵ دقیقه استراحت و تنفس عمیق توصیه می‌شود.`;
             banner.className = 'insight-banner';
         } else {
-            banner.textContent = `توجه و مراقبت: نوسانات هیجانی بیشتر از کنش‌های مثبت بوده است. کانون بیشترین چالش شما در بازه "${totals.crisisSlot}" است. روی مکث ۵ ثانیه‌ای و سکوت در هنگام خشم تمرکز کنید.`;
+            banner.textContent = `توجه و مراقبت (${totals.periodTitle}): نوسانات هیجانی بیشتر از کنش‌های مثبت بوده است. بیشترین چالش در بازه "${totals.crisisSlot}" بوده است. روی مکث ۵ ثانیه‌ای تمرکز کنید.`;
             banner.className = 'insight-banner warning';
         }
+
+        // تغییر برچسب دکمه متناسب با دوره
+        document.getElementById('btn-export-eitaa').textContent = `ارسال کارنامه (${totals.periodTitle}) به ایتا`;
+        document.getElementById('btn-export-copy').textContent = `کپی گزارش (${totals.periodTitle})`;
     }
 
     function buildReportText() {
-        const totals = getWeeklyTotals();
+        const totals = getReportData();
         const totalActions = totals.green + totals.red;
         const greenPercent = totalActions > 0 ? Math.round((totals.green / totalActions) * 100) : 0;
         const ratio = totals.red > 0 ? (totals.green / totals.red).toFixed(1) : totals.green;
-        return `📊 کارنامه پایش رفتار والد (تربیتو)
+        return `📊 کارنامه پایش رفتار والد - تربیتو (${totals.periodTitle})
 👤 والد: ${userData.name}
 ━━━━━━━━━━━━━━━
 💚 مجموع کنش‌های مثبت: ${totals.green} (${greenPercent}٪)
@@ -893,12 +1057,9 @@
         setTimeout(() => toast.classList.remove('show'), 2800);
     }
 
-    // متد کپی مقاوم برای اندروید و ویندوز
     function copyReportText() {
         const text = buildReportText();
         let copied = false;
-
-        // روش اول: روش سیستمی Textarea (سازگار با وب‌ویو اندروید)
         try {
             const tempInput = document.createElement("textarea");
             tempInput.value = text;
@@ -914,7 +1075,6 @@
             copied = false;
         }
 
-        // روش دوم: Clipboard API مدرن
         if (!copied && navigator.clipboard) {
             navigator.clipboard.writeText(text).then(() => {
                 showToast("✓ متن کارنامه با موفقیت کپی شد");
@@ -936,13 +1096,11 @@
                 return;
             } catch (e) {}
         }
-        
-        // اگر sendData توسط ایتا پشتیبانی نشد، متن کپی می‌شود
         copyReportText();
         showToast("کارنامه کپی شد! می‌توانید در چت الصاق کنید.");
     }
 
-    loadData();
+    loadAllData();
 </script>
 
 </body>
